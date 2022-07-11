@@ -12,3 +12,7 @@ Dockerfile では node のみが使えて react-app ディレクトリ以下を�
 (Docker 上で create-react-app して詰まったのと Next や GatsbyJS なども入れられるようにコピペで対応させるようにした)
 
 例：$react-app npx crate-react-app . --typescript
+
+## Docker イメージ作成&起動
+
+docker-compose up -d
