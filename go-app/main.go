@@ -81,7 +81,12 @@ func main() {
 		MaxAge: 12 * time.Hour,
 	}))
 
-
+    router.LoadHTMLFiles("index.html")
+    router.GET("/", func(c *gin.Context) {
+        c.HTML(http.StatusOK, "index.html", gin.H{
+            "hoge": "hoge",
+        })
+    })
 	router.GET("/albums", getAlbums)
 	router.GET("/albums/:id", getAlbumByID)
 	router.POST("/albums", postAlbums)
