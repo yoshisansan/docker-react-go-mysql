@@ -2,7 +2,9 @@ package main
 
 import (
 	"net/http"
+	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -57,8 +59,29 @@ func postAlbums(c *gin.Context) {
 	c.IndentedJSON(http.StatusCreated, newAlbum)
 }
 
+
 func main() {
 	router := gin.Default()
+
+    	// cors設定の適用
+	router.Use(cors.New(cors.Config{
+		// アクセスを許可したいアクセス元
+		AllowOrigins: []string{"http://localhost:3000"},
+
+		// アクセスを許可したいHTTPメソッド
+		AllowMethods: []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
+
+		// 許可したいHTTPリクエストヘッダ
+		AllowHeaders: []string{"Access-Control-Allow-Headers", "Content-Length", "Content-Type", "Authorization"},
+
+		// cookieなどの認証情報を含めるか否か(通常デフォルトfalseなので合わせました)
+		AllowCredentials: false,
+
+		// プリフライトリクエストのキャッシュ時間
+		MaxAge: 12 * time.Hour,
+	}))
+
+
 	router.GET("/albums", getAlbums)
 	router.GET("/albums/:id", getAlbumByID)
 	router.POST("/albums", postAlbums)
